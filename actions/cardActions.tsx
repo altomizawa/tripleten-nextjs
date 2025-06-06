@@ -1,6 +1,7 @@
 'use server'
 import connectDB from "@/lib/database";
 import Card from "@/models/Card";
+import { revalidatePath } from "next/cache";
 
 const addCard = async (formData: FormData) => {
   const title =  formData.get("title") as string; 
@@ -29,4 +30,36 @@ const addCard = async (formData: FormData) => {
   }
 }
 
-export { addCard };
+const getCards = async () => {
+  try{
+    await connectDB();
+    const cards = await Card.find();
+    if (!cards) {
+      throw new Error("Failed to fetch cards");
+    }
+    const serializedCards = JSON.parse(JSON.stringify(cards));
+
+    return { status: 200, success: true, serializedCards };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, success: false, message: error }; 
+  }
+}
+
+const deleteCard = async (id: string) => {
+  try{
+    await connectDB();
+    const card = await Card.findByIdAndDelete(id);
+    if (!card) {
+      throw new Error("Failed to delete card");
+    }
+    revalidatePath("/");
+    return { status: 200, success: true, message: "Card deleted successfully" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, success: false, message: error };
+  }
+}
+
+
+export { addCard, getCards, deleteCard };

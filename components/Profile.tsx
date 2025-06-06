@@ -2,10 +2,25 @@
 import { Pencil } from "lucide-react"
 import Image from "next/image"
 import CardFormPopup from "./CardFormPopup"
-import { useState } from "react"
+import { useState, useEffect} from "react"
 
 const Profile = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(true)
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
+
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsPopupOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  })
+
+  
   return (
     <div className="px-12 mt-16 flex justify-between items-center">
       <CardFormPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
