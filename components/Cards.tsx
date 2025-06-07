@@ -34,7 +34,11 @@ const Cards = ({ cards }: { cards: Card[] }) => {
 
   return (
     <div className='flex gap-24 px-12 mt-16 flex-wrap justify-center md:justify-left'>
-      <Toaster richColors position='top-center' />
+      <div className='absolute'>
+        <Toaster richColors position='top-center' />
+
+      </div>
+
       {isPopupOpen && <Popup slide={slide} setIsPopupOpen={setIsPopupOpen} />}
       {cards?.map((item: Card, index: number) => (
         <div key={index} className='overflow-hidden rounded-xl relative'>
