@@ -14,7 +14,7 @@ const addCard = async (formData: FormData) => {
 
   try{
     await connectDB();
-    const card = Card.create({
+    const card = await Card.create({
       title,
       description,
       imageUrl,
@@ -23,6 +23,7 @@ const addCard = async (formData: FormData) => {
     if (!card) {
       throw new Error("Failed to create card");
     }
+    revalidatePath("/");
     return { status: 200, success: true, message: "Card created successfully" };
   } catch (error) {
     console.error(error);
