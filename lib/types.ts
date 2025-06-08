@@ -8,3 +8,7 @@ export type Card = {
   updatedAt?: string;
 } | undefined
 
+export interface SessionPayload {
+  userId: string;
+  expiresAt: Date;
+}

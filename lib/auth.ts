@@ -1,12 +1,18 @@
 'use server'
 import { SignupFormSchema } from "./definitions"
+import { redirect } from "next/navigation"
+import bcrypt from 'bcrypt'
+import connectDB from "@/lib/database"
+import { User } from "@/models/User"
+import  { createSession, deleteSession } from "@/lib/session"
 
-const signup = async (state: FormState, formData: FormData) => {
+const signup = async ( formData: FormData) => {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
+    confirmPassword: formData.get('confirmPassword'),
   })
  
   // If any form fields are invalid, return early
@@ -15,8 +21,41 @@ const signup = async (state: FormState, formData: FormData) => {
       errors: validatedFields.error.flatten().fieldErrors,
     }
   }
+  // If all form fields are valid, prepare data for insertion into the database
+  const { name, email, password  } = validatedFields.data
+  const hashedPassword = await bcrypt.hash(password, 12)
+  
 
-  console.log(validatedFields.data)
+    await connectDB();
+    const currentUser = await User.findOne({ email })
+    if (currentUser) {
+      return {
+        status: 400,
+        success: false,
+        message: 'User already exists'
+      }
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+    })
+
+    if (!user) {
+      return {
+        status: 500,
+        success: false,
+        message: 'Error creating user'
+      }
+    }
+    await createSession(user._id)
+    redirect('/')
 }
 
-export { signup } 
+async function logout () {
+  await deleteSession();
+  redirect('/login');
+}
+
+export { signup, logout }

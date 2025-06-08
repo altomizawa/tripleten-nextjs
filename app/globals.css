@@ -142,3 +142,7 @@ input{
 .allpopups {
   animation: popup 500ms ease-in-out;
 }
+
+.input-error{
+  @apply text-red-500 -mt-2 text-sm
+}
