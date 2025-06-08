@@ -15,9 +15,9 @@ gsap.registerPlugin(useGSAP);
 
 const Cards = ({ cards }: { cards: Card[] }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
-  const [slide, setSlide] = useState<Card>()
+  const [slide, setSlide] = useState<Card | undefined>()
   const [deletePopup, setDeletePopup] = useState<boolean>(false)
-  const [currentId, setCurrentId] = useState<string>()
+  const [currentId, setCurrentId] = useState<string | undefined>()
   const userId = 'user123'
 
   const handlePopup = (slide: Card) => {
@@ -31,6 +31,7 @@ const Cards = ({ cards }: { cards: Card[] }) => {
   }
 
   const handleDeleteCard = async () => {
+     if (!currentId) return;
     const response = await deleteCard(currentId)
     if (response.success) {
       setCurrentId(undefined)

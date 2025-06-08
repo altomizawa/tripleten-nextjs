@@ -20,13 +20,17 @@ const Popup = ({ slide, setIsPopupOpen }: { slide: Card , setIsPopupOpen: React.
     }
 })
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-20 z-10">
-      <div className="w-2/3 relative mx-auto">
-        <button onClick={() => setIsPopupOpen(false)}  className='absolute -top-8 right-0 cursor-pointer duration-300 hover:text-gray-400'>close X</button>
-        <Image width={1920} height={1080} src={slide.imageUrl} alt={slide.description} />
-        <p className="text-white">{slide.title}</p>
-      </div>
-    </div>
+    <>
+      {slide && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-20 z-10">
+        <div className="relative allpopups">
+          <div className='mx-8 md:mx-24 relative'>
+          <button onClick={() => setIsPopupOpen(false)}  className='absolute -top-8 right-0 cursor-pointer duration-300 hover:text-gray-400'>close X</button>
+            <Image width={1920} height={1080} className='object-cover mx-auto w-full h-auto max-h-[80vh]' src={slide.imageUrl} alt={slide.description} />
+            <p className="text-white">{slide.title}</p>
+          </div>
+        </div>
+      </div>}
+    </>
   )
 }
 

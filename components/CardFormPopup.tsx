@@ -22,7 +22,7 @@ const CardFormPopup =  ({isPopupOpen, setIsPopupOpen}: {isPopupOpen: boolean, se
     <>
       {isPopupOpen && <dialog className="fixed top-0 left-0 w-full h-full bg-black/90 flex justify-center items-center z-10">
         <Toaster richColors position="top-center" />
-        <form action={handleFormSubmit} className="bg-white flex flex-col w-[90%] md:w-1/2 max-w-[700] justify-center gap-4 px-12 py-8 text-black placeholder:text-black relative allpopups">
+        <form action={handleFormSubmit} className="bg-white flex flex-col w-[90%] lg:w-2/3 max-w-[700] justify-center gap-4 px-12 py-8 text-black placeholder:text-black relative allpopups">
           <p className='absolute -top-8 right-0 text-white hover:underline cursor-pointer' onClick={() => setIsPopupOpen(false)}>close X</p>
           <h2 className='text-xl font-bold text-center mb-12'>ADD NEW LOCATION</h2>
           <input name='title' type="text" placeholder="Title" required />
