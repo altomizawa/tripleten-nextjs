@@ -1,10 +1,10 @@
-export interface Card {
+export type Card = {
   _id: string;
   title: string;
   description?: string;
   imageUrl: string;
-  likes: number;
+  likes: string[];
   createdAt?: string;
   updatedAt?: string;
-}
+} | undefined
 

@@ -62,5 +62,28 @@ const deleteCard = async (id: string) => {
   }
 }
 
+const handleLikes = async (cardId: string, userId: string) => {
+  try{
+    await connectDB();
+    const card = await Card.findById(cardId);
+    if (!card) {
+      throw new Error("Failed to find card");
+    }
+    if (card.likes.includes(userId)){
+      await card.removeLike(userId);
+      await card.save();
+      revalidatePath("/");
+      return { status: 200, success: true, message: "Like removed successfully" };
+    }
+    await card.addLike(userId);
+    await card.save();
+    revalidatePath("/");
+    return { status: 200, success: true, message: "Like added successfully" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, success: false, message: error };
+  }
+}
 
-export { addCard, getCards, deleteCard };
+
+export { addCard, getCards, deleteCard, handleLikes };

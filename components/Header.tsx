@@ -2,6 +2,7 @@
 
 
 const Header = () => {
+  console.log("Header component rendered")
   return (
     <header className="flex justify-between py-12 border-b-[1px] border-gray-200 px-12">
       <h1 className="text-3xl font-bold">Around the US</h1>

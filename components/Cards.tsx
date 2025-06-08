@@ -1,25 +1,24 @@
 'use client'
 import { useState } from 'react'
 import Image from 'next/image'
-// import desert from '@/public/desert.jpg'
-// import egypt from  '@/public/egypt.jpg'
-// import veniceBeach from '@/public/venicebeach.jpg' 
-// import greece from '@/public/greece.jpg'
 import { Heart , Trash} from 'lucide-react'
 import Popup from './Popup'
 import { Card } from '@/lib/types'
-import { deleteCard } from '@/actions/cardActions'
+import { deleteCard, handleLikes } from '@/actions/cardActions'
 import { toast } from 'sonner'
 import { Toaster } from './ui/sonner'
 import DeleteCardPopup from './DeleteCardPopup'
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
+gsap.registerPlugin(useGSAP);
 
 const Cards = ({ cards }: { cards: Card[] }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [slide, setSlide] = useState<Card>()
   const [deletePopup, setDeletePopup] = useState<boolean>(false)
   const [currentId, setCurrentId] = useState<string>()
-
+  const userId = 'user123'
 
   const handlePopup = (slide: Card) => {
     setSlide(slide)
@@ -42,24 +41,40 @@ const Cards = ({ cards }: { cards: Card[] }) => {
     setDeletePopup(false)
   }
 
+  const handleCardLikes =  async (cardId: string) => {
+    const response = await handleLikes(cardId, userId)
+    if (!response.success) {
+      toast.error(response.message)
+    }
+  }
+
+  useGSAP(() => {
+    const cards = document.querySelectorAll('.card')
+    gsap.from(cards, {
+      opacity: 0,
+      stagger: 0.2, 
+      duration: 2,
+    })
+  })
+
   return (
     <div className='flex gap-24 px-12 mt-16 flex-wrap justify-center md:justify-left'>
       <div className='absolute'>
         <Toaster richColors position='top-center' />
       </div>
-      <DeleteCardPopup deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeleteCard={handleDeleteCard}  />
 
       {isPopupOpen && <Popup slide={slide} setIsPopupOpen={setIsPopupOpen} />}
+      <DeleteCardPopup deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeleteCard={handleDeleteCard} />
       {cards?.map((item: Card, index: number) => (
-        <div key={index} className='overflow-hidden rounded-xl relative'>
+        <div key={index} className='overflow-hidden rounded-xl relative card'>
           <button onClick={() => handleDeleteCardPopup(item._id)} className='absolute top-4 right-4 cursor-pointer hover:opacity-70'><Trash /></button>
           <Image onClick={() => handlePopup(item)} width={400} height={350} className='w-[400px] h-[350px] object-cover cursor-pointer' src={item.imageUrl} alt={`Image ${index + 1}`} />
           <div className='flex justify-between items-center bg-white px-8 py-6 rounded-b-xl'>
             <h2 className='text-black font-bold text-xl'>{item.title}</h2>
-            <div className='flex flex-col items-center gap-1'>
-              <Heart className='w-4 h-4' color='red' />
-              <p className='text-black text-sm'>{item.likes}</p>
-            </div>
+            <button onClick={() => handleCardLikes(item._id) } className='flex flex-col items-center gap-1 cursor-pointer'>
+              <Heart className='w-4 h-4' color='red' fill={`${item.likes.includes(userId) ? 'red' : 'none'}`} />
+              <p className='text-black text-sm'>{item.likes.length}</p>
+            </button>
           </div>
         </div>
           

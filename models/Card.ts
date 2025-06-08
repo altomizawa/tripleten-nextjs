@@ -13,8 +13,22 @@ const cardSchema = new Schema({
     type: String,
     required: true
   },  
-  likes: Number,
+  likes: [String],
 })
+
+cardSchema.methods.addLike = async function(userId: string) {
+  if (!this.likes.includes(userId)) {
+    this.likes.push(userId);
+    await this.save();
+  }
+}
+
+cardSchema.methods.removeLike = async function(userId: string) {
+  if (this.likes.includes(userId)){
+    this.likes = this.likes.filter((id: string) => id !== userId);
+    await this.save();
+  }
+}
 
 const Card = models.Card || model('Card', cardSchema)
 
