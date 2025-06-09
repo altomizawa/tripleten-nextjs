@@ -7,7 +7,7 @@ import { User } from "@/models/User"
 import  { createSession, deleteSession } from "@/lib/session"
 
 
-const signup = async ( currentState: FormState | null, formData: FormData) => {
+const signup = async (currentState: FormState | null, formData: FormData) => {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
@@ -22,13 +22,14 @@ const signup = async ( currentState: FormState | null, formData: FormData) => {
       status: 400,
       success: false,
       message: 'Invalid form data',
+      errors: validatedFields.error.flatten().fieldErrors,
     }
   }
   // If all form fields are valid, prepare data for insertion into the database
   const { name, email, password  } = validatedFields.data
   const hashedPassword = await bcrypt.hash(password, 12)
   
-
+  try {
     await connectDB();
     const currentUser = await User.findOne({ email })
     if (currentUser) {
@@ -53,7 +54,15 @@ const signup = async ( currentState: FormState | null, formData: FormData) => {
       }
     }
     await createSession(user._id.toString())
-    redirect('/')
+    // redirect('/')
+  } catch (error) {
+    console.error('Signup error:', error);
+    return {
+      status: 500,
+      success: false,
+      message: 'An error occurred during signup'
+    };
+  }
 }
 
 const login = async (currentState: FormState | null, formData: FormData) => {
@@ -95,7 +104,7 @@ const login = async (currentState: FormState | null, formData: FormData) => {
       }
     }
     await createSession(existingUser._id.toString())
-    redirect('/')
+    // redirect('/')
   } catch (error) {
     console.error('Login error:', error);
     return {

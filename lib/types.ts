@@ -27,8 +27,10 @@ export type FormState = {
   status: number;
   success: boolean;
   message: string;
-  errors?: {
-    password?: string[];
+  errors: {
+    name?: string[];
     email?: string[];
-  };
+    password?: string[];
+    confirmPassword?: string[];
+  } | null;
 }
