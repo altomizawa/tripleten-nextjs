@@ -148,6 +148,7 @@ const login = async (
       message: 'Login successful'
     };
   } catch (error) {
+    console.error('Login error:', error);
     return {
       status: 500,
       success: false,
