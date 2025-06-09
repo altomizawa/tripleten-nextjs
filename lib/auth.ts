@@ -54,7 +54,6 @@ const signup = async (currentState: FormState | null, formData: FormData) => {
       }
     }
     await createSession(user._id.toString())
-    // redirect('/')
   } catch (error) {
     console.error('Signup error:', error);
     return {
@@ -63,6 +62,7 @@ const signup = async (currentState: FormState | null, formData: FormData) => {
       message: 'An error occurred during signup'
     };
   }
+  redirect('/')
 }
 
 const login = async (currentState: FormState | null, formData: FormData) => {
@@ -113,6 +113,7 @@ const login = async (currentState: FormState | null, formData: FormData) => {
       message: 'An error occurred during login'
     };
   }
+  redirect('/')
 }
 
 async function logout () {

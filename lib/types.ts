@@ -1,7 +1,7 @@
 export type Card = {
   _id: string;
   title: string;
-  description?: string;
+  description: string;
   imageUrl: string;
   likes: string[];
   owner: string;
