@@ -9,6 +9,7 @@ export type Card = {
   updatedAt?: string;
 } | undefined
 
+
 export interface SessionPayload {
   userId: string;
   expiresAt: Date;
@@ -20,4 +21,14 @@ export interface sanitizedUser {
   email: string;
   avatar: string
   profession: string;
+}
+
+export type FormState = {
+  status: number;
+  success: boolean;
+  message: string;
+  errors?: {
+    password?: string[];
+    email?: string[];
+  };
 }
