@@ -4,8 +4,7 @@ import { redirect } from "next/navigation"
 import bcrypt from 'bcrypt'
 import connectDB from "@/lib/database"
 import { User } from "@/models/User"
-import  { createSession, deleteSession } from "@/lib/session"
-import { FormState } from "./types"
+import  { createSession, deleteSession } from "@/lib/session""
 
 
 const signup = async ( currentState: FormState, formData: FormData) => {
