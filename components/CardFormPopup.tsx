@@ -2,13 +2,19 @@ import { addCard } from "@/actions/cardActions"
 import { Toaster } from "./ui/sonner"
 import { toast } from "sonner"
 
+type CardResponse = {
+  status: number;
+  success: boolean;
+  message: string;
+}
+
 const CardFormPopup =  ({isPopupOpen, setIsPopupOpen}: {isPopupOpen: boolean, setIsPopupOpen: (isPopupOpen: boolean) => void}) => {
 
 
 
   const handleFormSubmit = async (formData: FormData) => {
     setIsPopupOpen(false)
-    const response = await addCard(formData)
+    const response = await addCard(formData) as CardResponse
     if (response.success) {
       console.log(response.message)
       toast(response.message)
