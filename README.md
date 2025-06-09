@@ -87,6 +87,9 @@ tripleten/
 
 The application is **live**! You can access it here:  
 👉 [**Around the US - NEXTJS**](https://tripleten-nextjs.vercel.app/)  
+You can create an account or use the demo account:
+**Email:** chucknorris@gmail.com
+**Password:** 123456
 
 Additionally, if you'd like to deploy your own version, you can easily do so on Vercel:  
 
