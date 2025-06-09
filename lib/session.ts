@@ -2,7 +2,6 @@ import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { SessionPayload } from '@/lib/types'
 import { cookies } from 'next/headers'
-import { de } from 'zod/v4/locales'
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)

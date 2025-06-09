@@ -3,7 +3,6 @@ import { Pencil } from "lucide-react"
 import Image from "next/image"
 import CardFormPopup from "./CardFormPopup"
 import { useState, useEffect} from "react"
-import { getUserfromSession } from "@/actions/userActions";
 import { sanitizedUser } from "@/lib/types"
 import UserFormPopup from "./UserFormPopup"
 

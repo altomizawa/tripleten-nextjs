@@ -1,4 +1,4 @@
-import { Key, useEffect } from 'react'
+import { useEffect } from 'react'
 
 const DeleteCardPopup = ({ deletePopup, setDeletePopup, handleDeleteCard }: { deletePopup: boolean, setDeletePopup: (deletePopup: boolean) => void, handleDeleteCard: () => void }) => {
   useEffect(() => {
@@ -10,8 +10,10 @@ const DeleteCardPopup = ({ deletePopup, setDeletePopup, handleDeleteCard }: { de
     document.addEventListener('keydown', handleEsc)
     return () => {
       document.removeEventListener('keydown', handleEsc)
+      setDeletePopup(false);
     }
-  },[])
+  },[setDeletePopup])
+
   return (
     <>
      {deletePopup && <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80 z-100 flex justify-center items-center">

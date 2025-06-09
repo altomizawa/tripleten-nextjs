@@ -1,5 +1,5 @@
 'use server'
-import { SignupFormSchema, LoginFormSchema } from "./definitions"
+import { SignupFormSchema, LoginFormSchema, FormState } from "./definitions"
 import { redirect } from "next/navigation"
 import bcrypt from 'bcrypt'
 import connectDB from "@/lib/database"
@@ -7,7 +7,7 @@ import { User } from "@/models/User"
 import  { createSession, deleteSession } from "@/lib/session"
 
 
-const signup = async ( currentState: any, formData: FormData) => {
+const signup = async ( currentState: FormState, formData: FormData) => {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
@@ -54,7 +54,7 @@ const signup = async ( currentState: any, formData: FormData) => {
     redirect('/')
 }
 
-const login = async ( currentState: any, formData: FormData) => {
+const login = async ( currentState: FormState, formData: FormData) => {
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
