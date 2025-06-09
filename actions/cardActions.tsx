@@ -20,7 +20,6 @@ const addCard = async (formData: FormData) => {
       title,
       description,
       imageUrl,
-      likes: 0,
       owner: userId.toString(),
     });
     if (!card) {
