@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Heart , Trash} from 'lucide-react'
 import Popup from './Popup'
-import { Card, sanitizedUser } from '@/lib/types'
+import { Card, sanitizedUser, CardResponse } from '@/lib/types'
 import { deleteCard, handleLikes } from '@/actions/cardActions'
 import { toast } from 'sonner'
 import { Toaster } from './ui/sonner'
@@ -32,7 +32,7 @@ const Cards = ({ cards, user }: { cards: Card[], user: sanitizedUser }) => {
 
   const handleDeleteCard = async () => {
      if (!currentId) return;
-    const response = await deleteCard(currentId)
+    const response = await deleteCard(currentId) as CardResponse
     if (response.success) {
       setCurrentId(undefined)
       toast(response.message)
@@ -43,7 +43,7 @@ const Cards = ({ cards, user }: { cards: Card[], user: sanitizedUser }) => {
   }
 
   const handleCardLikes =  async (cardId: string) => {
-    const response = await handleLikes(cardId, userId)
+    const response = await handleLikes(cardId, userId) as CardResponse
     if (!response.success) {
       toast.error(response.message)
     }
@@ -66,20 +66,22 @@ const Cards = ({ cards, user }: { cards: Card[], user: sanitizedUser }) => {
 
       {isPopupOpen && <Popup slide={slide} setIsPopupOpen={setIsPopupOpen} />}
       <DeleteCardPopup deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeleteCard={handleDeleteCard} />
-      {cards?.map((item: Card, index: number) => (
-        <div key={index} className='overflow-hidden rounded-xl relative card min-w-[300px]'>
-          {item?.owner === userId && <button onClick={() => handleDeleteCardPopup(item?._id)} className='absolute top-4 right-4 cursor-pointer hover:opacity-70'><Trash /></button>}
-          <Image onClick={() => handlePopup(item)} width={400} height={350} className='w-[400px] h-[350px] object-cover cursor-pointer' src={item.imageUrl} alt={`Image ${index + 1}`} />
-          <div className='flex justify-between items-center bg-white px-8 py-6 rounded-b-xl'>
-            <h2 className='text-black font-bold text-xl'>{item.title}</h2>
-            <button onClick={() => handleCardLikes(item._id) } className='flex flex-col items-center gap-1 cursor-pointer'>
-              <Heart className='w-4 h-4' color='red' fill={`${item?.likes.includes(userId) ? 'red' : 'none'}`} />
-              <p className='text-black text-sm'>{item.likes.length}</p>
-            </button>
+      {cards?.map((item: Card, index: number) => {
+        if (!item) return null;
+        return (
+          <div key={index} className='overflow-hidden rounded-xl relative card min-w-[300px]'>
+            {item.owner === userId && <button onClick={() => handleDeleteCardPopup(item._id)} className='absolute top-4 right-4 cursor-pointer hover:opacity-70'><Trash /></button>}
+            <Image onClick={() => handlePopup(item)} width={400} height={350} className='w-[400px] h-[350px] object-cover cursor-pointer' src={item.imageUrl} alt={`Image ${index + 1}`} />
+            <div className='flex justify-between items-center bg-white px-8 py-6 rounded-b-xl'>
+              <h2 className='text-black font-bold text-xl'>{item.title}</h2>
+              <button onClick={() => handleCardLikes(item._id)} className='flex flex-col items-center gap-1 cursor-pointer'>
+                <Heart className='w-4 h-4' color='red' fill={`${item.likes.includes(userId) ? 'red' : 'none'}`} />
+                <p className='text-black text-sm'>{item.likes.length}</p>
+              </button>
+            </div>
           </div>
-        </div>
-          
-      ))}
+        );
+      })}
     </div>
   )
 }

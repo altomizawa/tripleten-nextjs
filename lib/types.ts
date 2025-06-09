@@ -34,3 +34,9 @@ export type FormState = {
     confirmPassword?: string[];
   } | null;
 }
+
+export type CardResponse = {
+  status: number;
+  success: boolean;
+  message: string;
+}

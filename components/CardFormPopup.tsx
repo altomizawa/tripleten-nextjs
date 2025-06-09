@@ -1,12 +1,9 @@
 import { addCard } from "@/actions/cardActions"
 import { Toaster } from "./ui/sonner"
 import { toast } from "sonner"
+import { CardResponse } from "@/lib/types"
 
-type CardResponse = {
-  status: number;
-  success: boolean;
-  message: string;
-}
+
 
 const CardFormPopup =  ({isPopupOpen, setIsPopupOpen}: {isPopupOpen: boolean, setIsPopupOpen: (isPopupOpen: boolean) => void}) => {
 
