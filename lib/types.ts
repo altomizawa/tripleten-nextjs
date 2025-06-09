@@ -19,4 +19,5 @@ export interface sanitizedUser {
   name: string;
   email: string;
   avatar: string
+  profession: string;
 }

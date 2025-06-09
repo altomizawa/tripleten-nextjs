@@ -24,8 +24,13 @@ const UserFormPopup =  ({editProfilePopup, setEditProfilePopup, user}: {editProf
         <form action={handleFormSubmit} className="relative bg-white flex flex-col w-[90%] md:max-w-[600px] p-12">
           <p className='absolute -top-8 right-0 text-white hover:underline cursor-pointer' onClick={() => setEditProfilePopup(false)}>close X</p>
           <h2 className='text-xl font-bold text-center mb-12'>EDIT PROFILE</h2>
+          <label htmlFor="name" className='px-2'>Name:</label>
           <input name='name' type="text" placeholder={user.name}  />
+          <label htmlFor="profession" className='px-2 mt-4'>Profession:</label>
+          <input name='profession' type="text" placeholder={user.profession}  />
+          <label htmlFor="email" className='px-2 mt-4'>Email:</label>
           <input name='email' type="email" placeholder={user.email} />
+          <label htmlFor="avatar" className='px-2 mt-4'>Profile Photo:</label>
           <input name='avatar' type="url" placeholder='Profile Photo URL' />
           <button className='bg-black hover:bg-black/80 cursor-pointer text-white font-bold py-2 px-4 rounded mt-8' type="submit">Submit</button>
         </form>

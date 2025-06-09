@@ -27,6 +27,7 @@ const getUserfromSession = async () => {
     name: user.name,
     email: user.email,
     avatar: user.avatar,
+    profession: user.profession,
   };
   return {
     status: 200,
@@ -46,6 +47,7 @@ const updateUser = async (formData: FormData) => {
       name: formData.get('name') || user.name, // Use existing name if not provided
       email: formData.get('email') || user.email, // Use existing email if not provided
       avatar: formData.get('avatar') || user.avatar, // Use existing avatar if not provided
+      profession: formData.get('profession') || user.profession, // Use existing avatar if not provided
     })
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
@@ -55,10 +57,11 @@ const updateUser = async (formData: FormData) => {
       }
     }
     // If all form fields are valid, prepare data for insertion into the database
-    const { name, email, avatar  } = validatedFields.data
+    const { name, email, avatar, profession  } = validatedFields.data
     user.name = name; // Use existing name if not provided
     user.email = email; // Use existing email if not provided
     user.avatar = avatar; // Use existing avatar if not provided
+    user.profession = profession; // Use existing avatar if not provided
     await user.save();
     revalidatePath('/');
     return {
@@ -69,21 +72,6 @@ const updateUser = async (formData: FormData) => {
   } catch (error) {
     console.log(error)
   }
-  // console.log('User found:', user, session);
-  // if (!user) {
-  //   return {
-  //     status: 404,
-  //     success: false,
-  //     message: 'User not found',
-  //   }
-  // }
-  
-
-  // user.name = name || user.name; // Use existing name if not provided
-  // user.email = email || user.email; // Use existing email if not provided
-  // user.avatar = avatar || user.avatar; // Use existing avatar if not provided
-  // await user.save();
-  // console.log('User found:', user);
   return{
     status: 200,
     success: true,

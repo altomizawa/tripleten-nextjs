@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <>
       <Header user={user}/>
-      <Profile />
+      <Profile user={user} />
       <Cards user={user} cards={cards} />
       <Footer />
     </>

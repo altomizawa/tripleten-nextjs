@@ -87,7 +87,6 @@ const login = async ( formData: FormData) => {
         message: 'Invalid password'
       }
     }
-    console.log(existingUser)
     await createSession(existingUser._id.toString())
     redirect('/')
 }

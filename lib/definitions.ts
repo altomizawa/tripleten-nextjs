@@ -47,6 +47,7 @@ export const UpdateUserFormSchema = z.object({
     .optional(),
   email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
   avatar: z.string().url({ message: 'Please enter a valid URL.' }).trim(),
+  profession: z.string().trim().optional(),
 })
  
 export type FormState =
