@@ -2,7 +2,6 @@
 A modern web application built with Next.js 15, featuring authentication, animations, and a beautiful user interface.
 
 ![Project Screenshot - Homepage](public/screenshots/homepage.png)
-*Replace this with your actual homepage screenshot*
 
 ## 🚀 Features
 
@@ -21,13 +20,13 @@ A modern web application built with Next.js 15, featuring authentication, animat
 
 - **UI/UX**
   - Responsive design
-  - Dark/Light mode support
   - Toast notifications with Sonner
   - Smooth animations and transitions
   - Modern component library with Lucide icons
 
-![Project Screenshot - Features](public/screenshots/features.png)
-*Replace this with a screenshot showcasing key features*
+![Project Screenshot - Features](public/screenshots/addlocation.png)
+![Project Screenshot - Features](public/screenshots/login.png)
+
 
 ## 📋 Prerequisites
 
@@ -67,8 +66,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-![Project Screenshot - Setup](public/screenshots/setup.png)
-*Replace this with a screenshot of your development environment*
 
 ## 🏗️ Project Structure
 
