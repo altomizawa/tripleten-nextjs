@@ -4,6 +4,7 @@ export type Card = {
   description?: string;
   imageUrl: string;
   likes: string[];
+  owner: string;
   createdAt?: string;
   updatedAt?: string;
 } | undefined
@@ -11,4 +12,11 @@ export type Card = {
 export interface SessionPayload {
   userId: string;
   expiresAt: Date;
+}
+
+export interface sanitizedUser {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string
 }

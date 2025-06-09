@@ -3,9 +3,12 @@ import { Pencil } from "lucide-react"
 import Image from "next/image"
 import CardFormPopup from "./CardFormPopup"
 import { useState, useEffect} from "react"
+import { getUserfromSession } from "@/actions/userActions";
+
 
 const Profile = () => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
+  const [user, setUser] = useState<any>(null)
 
 
   useEffect(() => {
@@ -13,6 +16,15 @@ const Profile = () => {
       if (event.key === 'Escape') {
         setIsPopupOpen(false)
       }
+    }
+    const fetchUser = async () => {
+      const res = await getUserfromSession();
+      if (res.success) {
+        setUser(res.user);
+      }
+    }
+    if (user === null) {
+      fetchUser();
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => {
@@ -30,7 +42,7 @@ const Profile = () => {
         </div>
         <div>
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">Al Tomizawa</h1>
+            <h1 className="text-2xl font-bold">{user?.name}</h1>
             <button className="p-1 border-[1px] border-gray-200 cursor-pointer">
               <Pencil className="w-4 h-4" />
             </button>

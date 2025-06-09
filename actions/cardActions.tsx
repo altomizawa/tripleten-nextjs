@@ -2,6 +2,7 @@
 import connectDB from "@/lib/database";
 import Card from "@/models/Card";
 import { revalidatePath } from "next/cache";
+import { verifySession } from "@/lib/dal";
 
 const addCard = async (formData: FormData) => {
   const title =  formData.get("title") as string; 
@@ -14,11 +15,13 @@ const addCard = async (formData: FormData) => {
 
   try{
     await connectDB();
+    const { userId } = await verifySession();
     const card = await Card.create({
       title,
       description,
       imageUrl,
       likes: 0,
+      owner: userId.toString(),
     });
     if (!card) {
       throw new Error("Failed to create card");
@@ -34,6 +37,8 @@ const addCard = async (formData: FormData) => {
 const getCards = async () => {
   try{
     await connectDB();
+    await verifySession();
+
     const cards = await Card.find();
     if (!cards) {
       throw new Error("Failed to fetch cards");
@@ -50,6 +55,7 @@ const getCards = async () => {
 const deleteCard = async (id: string) => {
   try{
     await connectDB();
+    await verifySession();
     const card = await Card.findByIdAndDelete(id);
     if (!card) {
       throw new Error("Failed to delete card");
@@ -65,6 +71,8 @@ const deleteCard = async (id: string) => {
 const handleLikes = async (cardId: string, userId: string) => {
   try{
     await connectDB();
+    debugger
+    await verifySession();
     const card = await Card.findById(cardId);
     if (!card) {
       throw new Error("Failed to find card");

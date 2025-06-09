@@ -14,6 +14,11 @@ const cardSchema = new Schema({
     required: true
   },  
   likes: [String],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 })
 
 cardSchema.methods.addLike = async function(userId: string) {
