@@ -67,7 +67,7 @@ const Cards = ({ cards, user }: { cards: Card[], user: sanitizedUser }) => {
       {isPopupOpen && <Popup slide={slide} setIsPopupOpen={setIsPopupOpen} />}
       <DeleteCardPopup deletePopup={deletePopup} setDeletePopup={setDeletePopup} handleDeleteCard={handleDeleteCard} />
       {cards?.map((item: Card, index: number) => (
-        <div key={index} className='overflow-hidden rounded-xl relative card'>
+        <div key={index} className='overflow-hidden rounded-xl relative card min-w-[300px]'>
           {item?.owner === userId && <button onClick={() => handleDeleteCardPopup(item?._id)} className='absolute top-4 right-4 cursor-pointer hover:opacity-70'><Trash /></button>}
           <Image onClick={() => handlePopup(item)} width={400} height={350} className='w-[400px] h-[350px] object-cover cursor-pointer' src={item.imageUrl} alt={`Image ${index + 1}`} />
           <div className='flex justify-between items-center bg-white px-8 py-6 rounded-b-xl'>

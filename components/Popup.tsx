@@ -21,7 +21,7 @@ const Popup = ({ slide, setIsPopupOpen }: { slide: Card , setIsPopupOpen: React.
 })
   return (
     <>
-      {slide && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-20 z-10">
+      {slide && <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black/90 z-10">
         <div className="relative allpopups">
           <div className='mx-8 md:mx-24 relative'>
           <button onClick={() => setIsPopupOpen(false)}  className='absolute -top-8 right-0 cursor-pointer duration-300 hover:text-gray-400'>close X</button>

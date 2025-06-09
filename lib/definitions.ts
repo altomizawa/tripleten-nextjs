@@ -39,6 +39,15 @@ export const LoginFormSchema = z.object({
     // })
     .trim()
 })
+
+export const UpdateUserFormSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .optional(),
+  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  avatar: z.string().url({ message: 'Please enter a valid URL.' }).trim(),
+})
  
 export type FormState =
   | {

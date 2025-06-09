@@ -1,6 +1,9 @@
 'use server'
 import { verifySession } from "@/lib/dal";
+import { UpdateUserFormSchema } from "@/lib/definitions";
 import { User } from "@/models/User";
+import connectDB from "@/lib/database";
+import { revalidatePath } from "next/cache";
 
 const getUserfromSession = async () => {
   const session = await verifySession();
@@ -32,4 +35,61 @@ const getUserfromSession = async () => {
   };
 }
 
-export { getUserfromSession };
+const updateUser = async (formData: FormData) => {
+  const session = await verifySession();
+  const { userId } = session;
+  try {
+    await connectDB()
+    const user = await User.findById(userId);
+    // Validate form fields
+    const validatedFields = UpdateUserFormSchema.safeParse({
+      name: formData.get('name') || user.name, // Use existing name if not provided
+      email: formData.get('email') || user.email, // Use existing email if not provided
+      avatar: formData.get('avatar') || user.avatar, // Use existing avatar if not provided
+    })
+    // If any form fields are invalid, return early
+    if (!validatedFields.success) {
+      console.log('Validation errors:', validatedFields.error.flatten().fieldErrors);
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+      }
+    }
+    // If all form fields are valid, prepare data for insertion into the database
+    const { name, email, avatar  } = validatedFields.data
+    user.name = name; // Use existing name if not provided
+    user.email = email; // Use existing email if not provided
+    user.avatar = avatar; // Use existing avatar if not provided
+    await user.save();
+    revalidatePath('/');
+    return {
+      status: 200,
+      success: true,
+      message: 'User updated successfully',
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  // console.log('User found:', user, session);
+  // if (!user) {
+  //   return {
+  //     status: 404,
+  //     success: false,
+  //     message: 'User not found',
+  //   }
+  // }
+  
+
+  // user.name = name || user.name; // Use existing name if not provided
+  // user.email = email || user.email; // Use existing email if not provided
+  // user.avatar = avatar || user.avatar; // Use existing avatar if not provided
+  // await user.save();
+  // console.log('User found:', user);
+  return{
+    status: 200,
+    success: true,
+    message: 'User updated successfully',
+  }
+}
+
+
+export { getUserfromSession, updateUser};

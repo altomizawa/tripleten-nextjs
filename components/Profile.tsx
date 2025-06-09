@@ -36,7 +36,7 @@ const Profile = () => {
   return (
     <div className="px-12 mt-16 flex justify-between items-center">
       <CardFormPopup isPopupOpen={isPopupOpen} setIsPopupOpen={setIsPopupOpen} />
-      <div className="flex items-center gap-8">
+      <div className="hidden md:flex items-center gap-8">
         <div className="overflow-hidden rounded-full w-36 h-36">
           <Image src='/bradpitt.webp' alt='bradpitt' width={200} height={200} />
         </div>
@@ -50,7 +50,7 @@ const Profile = () => {
           <p>Superstar</p>
         </div>
       </div>
-      <p onClick={() => setIsPopupOpen(true)} className="text-4xl font-extralight px-16 py-1.5 border-[1px] border-white cursor-pointer hover:bg-white hover:text-black duration-500">+</p>
+      <p onClick={() => setIsPopupOpen(true)} className="w-[400px] md:w-min mx-auto md:mx-0 text-center text-4xl font-extralight px-16 py-1.5 border-[1px] border-white cursor-pointer hover:bg-white hover:text-black duration-500">+</p>
     </div>
   )
 }
