@@ -6,7 +6,8 @@ import connectDB from "@/lib/database"
 import { User } from "@/models/User"
 import  { createSession, deleteSession } from "@/lib/session"
 
-const signup = async ( formData: FormData) => {
+
+const signup = async ( currentState: any, formData: FormData) => {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
@@ -53,7 +54,7 @@ const signup = async ( formData: FormData) => {
     redirect('/')
 }
 
-const login = async ( formData: FormData) => {
+const login = async ( currentState: any, formData: FormData) => {
   // Validate form fields
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
@@ -62,7 +63,11 @@ const login = async ( formData: FormData) => {
  
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors)
     return {
+      status: 400,
+      success: false,
+      message: 'Invalid form data',
       errors: validatedFields.error.flatten().fieldErrors,
     }
   }

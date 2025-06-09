@@ -1,4 +1,3 @@
-import { log } from 'console'
 import { useEffect } from 'react'
 
 const LogoutPopup = ({ logoutPopup, setLogoutPopup, logout }: { logoutPopup: boolean, setLogoutPopup: (logoutPopup: boolean) => void, logout: () => void }) => {
