@@ -19,7 +19,9 @@ const signup = async ( currentState: FormState, formData: FormData) => {
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      status: 400,
+      success: false,
+      message: 'Invalid form data',
     }
   }
   // If all form fields are valid, prepare data for insertion into the database
@@ -63,12 +65,12 @@ const login = async ( currentState: FormState, formData: FormData) => {
  
   // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten().fieldErrors)
+    //console.log(validatedFields.error.flatten().fieldErrors)
     return {
       status: 400,
       success: false,
       message: 'Invalid form data',
-      errors: validatedFields.error.flatten().fieldErrors,
+      // errors: validatedFields.error.flatten().fieldErrors,
     }
   }
   // If all form fields are valid, prepare data for insertion into the database
