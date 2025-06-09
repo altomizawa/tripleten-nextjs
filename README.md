@@ -1,5 +1,4 @@
-# TripleTen Project
-
+# Around the US - NEXTJS
 A modern web application built with Next.js 15, featuring authentication, animations, and a beautiful user interface.
 
 ![Project Screenshot - Homepage](public/screenshots/homepage.png)
