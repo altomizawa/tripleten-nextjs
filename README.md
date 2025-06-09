@@ -84,11 +84,16 @@ tripleten/
 └── middleware.ts    # Next.js middleware
 ```
 
-## 🚀 Deployment
+## 🚀 Deployment  
 
-The application can be easily deployed on Vercel:
+The application is **live**! You can access it here:  
+👉 [**Around the US - NEXTJS**](https://tripleten-nextjs.vercel.app/)  
+
+Additionally, if you'd like to deploy your own version, you can easily do so on Vercel:  
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Ftripleten)
+
+
 
 ## 🛠️ Development
 
