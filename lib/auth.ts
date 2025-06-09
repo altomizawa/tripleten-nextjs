@@ -80,7 +80,7 @@ const login = async ( currentState: any, formData: FormData) => {
       return {
         status: 400,
         success: false,
-        message: 'No user found'
+        message: 'Invalid username or password'
       }
     }
 
@@ -89,7 +89,7 @@ const login = async ( currentState: any, formData: FormData) => {
       return {
         status: 400,
         success: false,
-        message: 'Invalid password'
+        message: 'Invalid username or password'
       }
     }
     await createSession(existingUser._id.toString())
