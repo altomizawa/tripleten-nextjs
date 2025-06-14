@@ -14,7 +14,7 @@ export default async function Home() {
     <>
       <Header user={user}/>
       <Profile user={user} />
-      <Cards user={user} cards={cards} />
+      <Cards user={user} cards={cards.reverse()} />
       <Footer />
     </>
   );
