@@ -36,7 +36,7 @@ const Login = () => {
            {showPassword ? 'Hide password' : 'Show password'} 
           </button>
         </div>
-        <button className='cursor-pointer text-white font-bold py-2 px-4 rounded mt-8 bg-black hover:bg-black/80' type="submit">{isPending ? 'Loading...' : 'Submit'}</button>
+        <button className='cursor-pointer text-white font-bold py-2 px-4 rounded mt-8 bg-black hover:bg-black/80' disabled={isPending} type="submit">{isPending ? 'Loading...' : 'Submit'}</button>
       <p className="text-center text-sm text-gray-600">Don&apos;t have an account? <Link href='/signup' className="underline hover:text-black text-right w-full">Click here</Link></p>
       </form>
     </div>
